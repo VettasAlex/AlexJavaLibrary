@@ -36,13 +36,19 @@ public class Library {
         System.out.print("Enter book title to borrow: ");
         String title = choice.nextLine();
         int index = Book.findBookIndex(title);
-        if (index != -1) {
-            Book.changeAvailability(index, false);
-            System.out.println("You have successfully borrowed: " + title);
-        } else {
-            System.out.println("We don't have this book, but we'll look into it! :)");
+
+        if (index != -1) { // Book exists
+            if (Book.availability[index]) { //book available
+                Book.changeAvailability(index, false);
+                System.out.println("You have successfully borrowed: " + title);
+            } else { // book exists but unavailable
+                System.out.println("Sorry, '" + title + "' is currently borrowed by someone else.");
+            }
+        } else { // book doesn't exist
+            System.out.println("We don’t have '" + title + "' in our collection, but we'll look into adding it!");
         }
     }
+
     //userChoice == 3
     public void returnBook() {
         System.out.print("Enter book title to return: ");
